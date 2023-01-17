@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoList from './components/TodoList';
+import NewtoDo from './components/NewTodo';
+import { useState } from 'react';
 
-function App() {
+interface ToDo {
+  id:string;
+  text:string
+}
+
+const App: React.FC = () => {
+
+  const [todo, setTodo] = useState<ToDo[]>([])
+
+  const addTodo = (text:string) =>  {
+  setTodo([...todo, {id:Math.random().toString(), text: text}])
+  }
+
+  const deleteToDo = (id: string) => {
+    console.log("id", id)
+    setTodo(todo.filter(todo => todo.id !== id))}
+  
+
+  console.log(todo)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+     
+    
+        <NewtoDo add={addTodo} />
+         <TodoList items={todo} delete={deleteToDo}/>
+       
+        </div>
+  )
+     
 }
 
 export default App;
